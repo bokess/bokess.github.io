@@ -289,25 +289,101 @@
       
         
           
-            <p>##应用场景<br>    应用场景:<br>            总公司<br>                    开发部门<br>                                小李<br>                                小曾<br>                                小张<br>                                小刘<br>                                小莫<br>                                小林</p>
-<pre><code>            财务部门
-                        小庄
-                        小江
-                        小明
+            <p>##应用场景</p>
+<pre><code>应用场景:
+        总公司
+                开发部门
+                            小李
+                            小曾
+                            小张
+                            小刘
+                            小莫
+                            小林
 
-需求:公司要让公司开发部的小林执行努力工作这件事
+                财务部门
+                            小庄
+                            小江
+                            小明
+
+    需求:公司要让公司开发部的小林执行努力工作这件事
 </code></pre><p>##代码实现</p>
-<p>###定义公司类<br>        function headOffice(name){//定义一个类,这个类代表公司<br>            this.name = name;//公司名字<br>            this.departments = [];//定义一个存放公司的部门的数组<br>        };<br>        headOffice.prototype.getDepartment = function(){//一个公司肯定知道有什么部门,所以这里定义了一个获取公司部门的方法<br>            return this.departments;//前面我定义了一个this.departments的数组存放公司的部门,这里把这个数组返回回去,就把公司的部门获取到了.<br>        };<br>        headOffice.prototype.addDepartment = function(name){//我设了一个部门,那我怎么把部门归到公司下呢?所以我这里定义了为公司添加部门的方法<br>            this.departments.push(name);//把部门推到存放部门的数组里面<br>            return this;//这里返回this是为了可以执行链式操作<br>        };<br>        headOffice.prototype.removeDepartment = function(name){//公司改革不想要一个部门.所以也要定义一个移除公司部门的方法<br>            var index = this.departments.indexOf(name);//首先找到要被移除部门,在数组里的下标.(返回大于负1,证明这个公司存在这个部门.否则不存在)<br>            if(index &gt; -1){//如果下标大于负1证明找了该部门<br>                this.departments.splice(index,1);//移除这个部门,splice方法第一参数开始下标,第二参数剪切长度.(注意splice会改变原数组);<br>            }else{//如果index不大于负证明公司里面没有这个部门<br>                console.warn(“没找到”+name+”部门”);//这里在浏览器打印一个警告,说没找到这个部门<br>            };<br>            return this;//跟前面一样为了可以执行链式操作<br>        };</p>
-<p>###定义公司部门类<br>    function department(name){//定义一个类,这个类代表公司部门<br>            this.name = name;//部门名字<br>            this.persons = [];//存放公司部门的员工<br>        };<br>        department.prototype.getPerson = function(){//一个部门里想知道有什么人,所以要设置获取部门员工的方法<br>            return this.persons;//把部门存放员工的数组返回去,就获取到了部门的所以员工<br>        };<br>        department.prototype.addPerson = function(name){//部门业务扩展需要招人,所以要为部门设置添加员工的方法<br>            this.persons.push(name);//把员工推到存放员工的数组里面<br>            return this;//为了可以执行链式操作<br>        };<br>        department.prototype.removePerson = function(name){//有些员工经常偷懒,迟到,部门不打算继续用这个人了.所以要为部门设置移除员工的方法<br>            var index = this.persons.indexOf(name);//首先找到这个员工在员工数组里的下标.(返回大于负1,证明这个部门存在这个员工.否则不存在)<br>            if(index &gt; -1){//如果大于负1,证明这个人存在<br>                this.persons.splice(index,1);//把这个人炒鱿鱼,splice方法第一参数开始下标,第二参数剪切长度.(注意splice会改变原数组);<br>            }else{//如果index不大于负1,证明这个人不存在.<br>                console.warn(“没在到”+name+”这个人”);//在浏览器打印警告说这个没找到.<br>            };<br>            return this;//为了可以执行链式操作<br>        };</p>
-<p>###定义员工类<br>    function person(name){//定义一个类,这个类表公司员工或者部门员工<br>            this.name = name;//员工名字<br>        };<br>        person.prototype.hardWroking = function(){//需求是让小林执行努力工作,所以我在这里为员工定义了一个努力工作的方法.<br>            //如果需求是让一个部门努力工作,那这个方法应该定义在部门类上吗?答案是否定的.例如:公司让财务部努力工作,最终执行努力工作的是财务部的所有员工,所有这个方法还是要定义在员工类上.<br>            document.write(this.name+” 努力工作…<br>“);<br>        };<br>        person.prototype.sleeping = function(){//这是另外定义的让员工休息好,接着加班的方法.<br>            document.write(this.name+” 努力休息迎接下次加班…<br>“);<br>        };</p>
-<p>###根据应用场景创建一个公司</p>
-<p>####根据员工类实例化员工<br>        var xLi = new person(“小李”);<br>        var xZeng = new person(“小曾”);<br>        var xZhang = new person(“小张”);<br>        var xLiu = new person(“小刘”);<br>        var xMo = new person(“小莫”);<br>        var xLin = new person(“小林”);<br>        var xZhuang = new person(“小庄”);<br>        var xJiang = new person(“小江”);<br>        var xMing = new person(“小明”);</p>
-<p>####根据部门类实例化部门,并为部门添加员工<br>        var development = new department(“开发部门”);<br>        //小李,小曾,小张,小刘,小莫,小林都是入职到开发部门<br>        development.addPerson(xLi).addPerson(xZeng).addPerson(xZhang).addPerson(xLiu).addPerson(xMo).addPerson(xLin);</p>
-<pre><code>var finance = new department(&quot;财务部门&quot;);
+<p>###定义公司类</p>
+<pre><code>function headOffice(name){//定义一个类,这个类代表公司  
+    this.name = name;//公司名字  
+    this.departments = [];//定义一个存放公司的部门的数组
+};
+headOffice.prototype.getDepartment = function(){//一个公司肯定知道有什么部门,所以这里定义了一个获取公司部门的方法
+    return this.departments;//前面我定义了一个this.departments的数组存放公司的部门,这里把这个数组返回回去,就把公司的部门获取到了.
+};
+headOffice.prototype.addDepartment = function(name){//我设了一个部门,那我怎么把部门归到公司下呢?所以我这里定义了为公司添加部门的方法
+    this.departments.push(name);//把部门推到存放部门的数组里面
+    return this;//这里返回this是为了可以执行链式操作
+};
+headOffice.prototype.removeDepartment = function(name){//公司改革不想要一个部门.所以也要定义一个移除公司部门的方法
+    var index = this.departments.indexOf(name);//首先找到要被移除部门,在数组里的下标.(返回大于负1,证明这个公司存在这个部门.否则不存在)
+    if(index &gt; -1){//如果下标大于负1证明找了该部门
+        this.departments.splice(index,1);//移除这个部门,splice方法第一参数开始下标,第二参数剪切长度.(注意splice会改变原数组);
+    }else{//如果index不大于负证明公司里面没有这个部门
+        console.warn(&quot;没找到&quot;+name+&quot;部门&quot;);//这里在浏览器打印一个警告,说没找到这个部门
+    };
+    return this;//跟前面一样为了可以执行链式操作
+};
+</code></pre><p>###定义公司部门类</p>
+<pre><code>function department(name){//定义一个类,这个类代表公司部门
+        this.name = name;//部门名字
+        this.persons = [];//存放公司部门的员工
+    };
+    department.prototype.getPerson = function(){//一个部门里想知道有什么人,所以要设置获取部门员工的方法
+        return this.persons;//把部门存放员工的数组返回去,就获取到了部门的所以员工
+    };
+    department.prototype.addPerson = function(name){//部门业务扩展需要招人,所以要为部门设置添加员工的方法
+        this.persons.push(name);//把员工推到存放员工的数组里面
+        return this;//为了可以执行链式操作
+    };
+    department.prototype.removePerson = function(name){//有些员工经常偷懒,迟到,部门不打算继续用这个人了.所以要为部门设置移除员工的方法
+        var index = this.persons.indexOf(name);//首先找到这个员工在员工数组里的下标.(返回大于负1,证明这个部门存在这个员工.否则不存在)
+        if(index &gt; -1){//如果大于负1,证明这个人存在
+            this.persons.splice(index,1);//把这个人炒鱿鱼,splice方法第一参数开始下标,第二参数剪切长度.(注意splice会改变原数组);
+        }else{//如果index不大于负1,证明这个人不存在.
+            console.warn(&quot;没在到&quot;+name+&quot;这个人&quot;);//在浏览器打印警告说这个没找到.
+        };
+        return this;//为了可以执行链式操作
+    };
+</code></pre><p>###定义员工类</p>
+<pre><code>function person(name){//定义一个类,这个类表公司员工或者部门员工
+        this.name = name;//员工名字
+    };
+    person.prototype.hardWroking = function(){//需求是让小林执行努力工作,所以我在这里为员工定义了一个努力工作的方法.
+        //如果需求是让一个部门努力工作,那这个方法应该定义在部门类上吗?答案是否定的.例如:公司让财务部努力工作,最终执行努力工作的是财务部的所有员工,所有这个方法还是要定义在员工类上.
+        document.write(this.name+&quot; 努力工作...&lt;br/&gt;&quot;);
+    };
+    person.prototype.sleeping = function(){//这是另外定义的让员工休息好,接着加班的方法.
+        document.write(this.name+&quot; 努力休息迎接下次加班...&lt;br/&gt;&quot;);
+    };
+</code></pre><p>###根据应用场景创建一个公司</p>
+<p>####根据员工类实例化员工</p>
+<pre><code>var xLi = new person(&quot;小李&quot;);
+var xZeng = new person(&quot;小曾&quot;);
+var xZhang = new person(&quot;小张&quot;);
+var xLiu = new person(&quot;小刘&quot;);
+var xMo = new person(&quot;小莫&quot;);
+var xLin = new person(&quot;小林&quot;);
+var xZhuang = new person(&quot;小庄&quot;);
+var xJiang = new person(&quot;小江&quot;);
+var xMing = new person(&quot;小明&quot;);
+</code></pre><p>####根据部门类实例化部门,并为部门添加员工</p>
+<pre><code>var development = new department(&quot;开发部门&quot;);
+//小李,小曾,小张,小刘,小莫,小林都是入职到开发部门
+development.addPerson(xLi).addPerson(xZeng).addPerson(xZhang).addPerson(xLiu).addPerson(xMo).addPerson(xLin);
+
+var finance = new department(&quot;财务部门&quot;);
 //小庄,小江,小明是入职到财务部门
 finance.addPerson(xZhuang).addPerson(xJiang).addPerson(xMing);
-</code></pre><p>####根据公司类实例化一个公司<br>        var company = new headOffice(“总公司”);<br>        //公司下面有开发部门(development)和财务部门(finance)<br>        company.addDepartment(development).addDepartment(finance);</p>
-<p>####实现需求让小林努力工作<br>这有人可能会说,我直接用xLin.hardWroking().就可以让小林执行努力工作了.这样是可以实现小林努力工作,但是看清楚xLin这个对象是小林自己本身,自己让自己努力工作(神经病),我还不如一直让自己sleeping呢.所以说这样不合适.</p>
+</code></pre><p>####根据公司类实例化一个公司</p>
+<pre><code>var company = new headOffice(&quot;总公司&quot;);
+//公司下面有开发部门(development)和财务部门(finance)
+company.addDepartment(development).addDepartment(finance);
+</code></pre><p>####实现需求让小林努力工作<br>这有人可能会说,我直接用xLin.hardWroking().就可以让小林执行努力工作了.这样是可以实现小林努力工作,但是看清楚xLin这个对象是小林自己本身,自己让自己努力工作(神经病),我还不如一直让自己sleeping呢.所以说这样不合适.</p>
 <pre><code>for(var i=0;i&lt;company.departments.length;i++){//用for循环遍历了公司部门的数组
     var dep = company.departments[i];//这里得到了公司的部门
     for(var j=0;j&lt;dep.persons.length;j++){//这里用for循环遍历了公司每个部门里面的员工
