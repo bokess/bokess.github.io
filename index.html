@@ -289,7 +289,7 @@
       
         
           
-            <p>上一篇文章<a href="https:bokess.github.io/2016/09/12/JavaScript组合模式前言/" target="_blank" rel="external">JavaScript组合模式前言</a>介绍了为什么要用组合模式.</p>
+            <p>上一篇文章<a href="https://bokess.github.io/2016/09/12/JavaScript组合模式前言/" target="_blank" rel="external">JavaScript组合模式前言</a>介绍了为什么要用组合模式.</p>
 <h2 id="组合模式使用场景"><a href="#组合模式使用场景" class="headerlink" title="组合模式使用场景"></a>组合模式使用场景</h2><pre><code>组合模式的使用场景：
 
 1 存在一批组织成某种层次体系的对象
@@ -508,7 +508,7 @@ headOffice.hardWroking(&apos;广州财务部&apos;)//广州财务部全体努力
 headOffice.hardWroking(&apos;小林&apos;)//小林努力工作
 
 headOffice.sleeping()//全公司全体努力工作
-</code></pre><p>我们看到只需要改变公司主体就行了,不会上个例子(<font color="#0099ff"><a href="https:bokess.github.io/2016/09/12/JavaScript组合模式前言/" target="_blank" rel="external">JavaScript组合模式前言</a></font>)要添加分公司类,函数逻辑也要改.对比之下,是不是觉得组合模式更能是适应需求变动.这就是组合模式,所有的实例都是通过组合对象和叶子对象,实例化出来的.</p>
+</code></pre><p>我们看到只需要改变公司主体就行了,不会上个例子(<font color="#0099ff"><a href="https://bokess.github.io/2016/09/12/JavaScript组合模式前言/" target="_blank" rel="external">JavaScript组合模式前言</a></font>)要添加分公司类,函数逻辑也要改.对比之下,是不是觉得组合模式更能是适应需求变动.这就是组合模式,所有的实例都是通过组合对象和叶子对象,实例化出来的.</p>
 <p>组合模式的使用场景：</p>
 <pre><code>1 存在一批组织成某种层次体系的对象
 2 希望对这批对象或其中的一部分对象实施一个操作。
@@ -742,7 +742,7 @@ company.addDepartment(development).addDepartment(finance);
         };
     };
 </code></pre><p>当然员工类还有一个sleeping的方法,也可以实现,我在这里就不实现了.根据上面的函数把里面的hardWroking改成sleeping即可.</p>
-<p>好了,现在函数封装好了,函数传部门则让全部门执行努力工作,传某个人就让某个人努力工作.你正在开香槟庆祝的时候,公司挣了大钱.公司挣大钱也不知道为我们程序猿涨涨工资,就拿钱去开分公司.<br>公司挣大钱了,开了分公司.这时候需求要变了.项目经理说我想要整个分公司的人都努力工作,你再回去看你的代码,发现要新建一个分公司类,然后还发现之前封装的函数已经不适合现在的需求了,要重新封装.这次需求实现了下次公司发展好,分公司又开分公司. Oh My God 我已经觉得生无可恋了,什么鬼又要改…<br>有什么方法可以把代码一次封装实现多变的需求吗?答案是肯定的,这方法就是JavaScript组合设计模式.在下篇文章再来介绍组合设计模式到底是何方神圣.</p>
+<p>好了,现在函数封装好了,函数传部门则让全部门执行努力工作,传某个人就让某个人努力工作.你正在开香槟庆祝的时候,公司挣了大钱.公司挣大钱也不知道为我们程序猿涨涨工资,就拿钱去开分公司.<br>公司挣大钱了,开了分公司.这时候需求要变了.项目经理说我想要整个分公司的人都努力工作,你再回去看你的代码,发现要新建一个分公司类,然后还发现之前封装的函数已经不适合现在的需求了,要重新封装.这次需求实现了下次公司发展好,分公司又开分公司. Oh My God 我已经觉得生无可恋了,什么鬼又要改…<br>有什么方法可以把代码一次封装实现多变的需求吗?答案是肯定的,这方法就是JavaScript组合设计模式.在下篇文章<a href="https://bokess.github.io/2016/09/13/JavaScript组合模式/" target="_blank" rel="external">JavaScript组合模式</a>再来介绍组合设计模式到底是何方神圣.</p>
 
           
         
