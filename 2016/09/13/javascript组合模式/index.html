@@ -1,0 +1,859 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript设计模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="上一篇文章JavaScript组合模式前言介绍了为什么要用组合模式.
+组合模式使用场景组合模式的使用场景：
+
+1 存在一批组织成某种层次体系的对象
+2 希望对这批对象或其中的一部分对象实施一个操作。
+组合模式的特点：
+1 组合模式中只有两种类型对象：组合对象、叶子对象
+2 这两种类型都实现同一批接口
+3 一般我们会在组合对象中调用其方法并隐式调用&amp;quot;下级对象&amp;quot;的方法（这里我们一般">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript组合模式">
+<meta property="og:url" content="http://yoursite.com/2016/09/13/javascript组合模式/index.html">
+<meta property="og:site_name" content="每天进步一点点">
+<meta property="og:description" content="上一篇文章JavaScript组合模式前言介绍了为什么要用组合模式.
+组合模式使用场景组合模式的使用场景：
+
+1 存在一批组织成某种层次体系的对象
+2 希望对这批对象或其中的一部分对象实施一个操作。
+组合模式的特点：
+1 组合模式中只有两种类型对象：组合对象、叶子对象
+2 这两种类型都实现同一批接口
+3 一般我们会在组合对象中调用其方法并隐式调用&amp;quot;下级对象&amp;quot;的方法（这里我们一般">
+<meta property="og:updated_time" content="2016-09-13T08:36:34.745Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript组合模式">
+<meta name="twitter:description" content="上一篇文章JavaScript组合模式前言介绍了为什么要用组合模式.
+组合模式使用场景组合模式的使用场景：
+
+1 存在一批组织成某种层次体系的对象
+2 希望对这批对象或其中的一部分对象实施一个操作。
+组合模式的特点：
+1 组合模式中只有两种类型对象：组合对象、叶子对象
+2 这两种类型都实现同一批接口
+3 一般我们会在组合对象中调用其方法并隐式调用&amp;quot;下级对象&amp;quot;的方法（这里我们一般">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/13/javascript组合模式/"/>
+
+  <title> javascript组合模式 | 每天进步一点点 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">每天进步一点点</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javascript组合模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-13T10:32:10+08:00" content="2016-09-13">
+              2016-09-13
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/13/javascript组合模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/13/javascript组合模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇文章<a href="https:bokess.github.io/2016/09/12/JavaScript组合模式前言/" target="_blank" rel="external">JavaScript组合模式前言</a>介绍了为什么要用组合模式.</p>
+<h2 id="组合模式使用场景"><a href="#组合模式使用场景" class="headerlink" title="组合模式使用场景"></a>组合模式使用场景</h2><pre><code>组合模式的使用场景：
+
+1 存在一批组织成某种层次体系的对象
+2 希望对这批对象或其中的一部分对象实施一个操作。
+组合模式的特点：
+1 组合模式中只有两种类型对象：组合对象、叶子对象
+2 这两种类型都实现同一批接口
+3 一般我们会在组合对象中调用其方法并隐式调用&quot;下级对象&quot;的方法（这里我们一般采用递归的形式去做）
+</code></pre><h2 id="我们用组合模式先实现JavaScript组合模式前言的例子"><a href="#我们用组合模式先实现JavaScript组合模式前言的例子" class="headerlink" title="我们用组合模式先实现JavaScript组合模式前言的例子."></a>我们用组合模式先实现<a href="https:bokess.github.io/2016/09/12/JavaScript组合模式前言/" target="_blank" rel="external">JavaScript组合模式前言</a>的例子.</h2><h3 id="定义组合对象跟叶子对象"><a href="#定义组合对象跟叶子对象" class="headerlink" title="定义组合对象跟叶子对象"></a>定义组合对象跟叶子对象</h3><p>按照组合模式的特点，我们先定义好组合对象和叶子对象。组合对象就是我们上个例子提到的公司、分公司、部门等等，这些都属于组合对象公司，他们都有共同的特点就都由一个或多个对象组合而成。公司有分公司或在部门组合成，分公司有部门或者员工组合成。员工就是叶子对象，因为员工就是一个员工，不会出现xx和xx组合成员工。</p>
+<h4 id="实现组合对象定义"><a href="#实现组合对象定义" class="headerlink" title="实现组合对象定义"></a>实现组合对象定义</h4><pre><code>我先定义两个接口：
+
+组合对象的接口:comInterface
+var comInterface = new Interface(&quot;comInterface&quot;,[&apos;addChild&apos;,&apos;getChild&apos;,&apos;removeChild&apos;]);
+
+叶子对象的接口:leafInterface
+var leafInterface = new Interface(&apos;leafInterface&apos;,[&apos;hardWroking&apos;,&apos;sleeping&apos;]);
+
+定义组合对象
+function combination(name){
+        //组合对象的名字
+        this.name = name;
+        //定义一个type属性标明它是组合对象方便后面判断
+        this.type = &apos;combination&apos;;
+        //组合对象下面有分公司或者部门或者员工,所以要定义个数组存放他们的子类
+        this.childs = [];
+    };
+    //实现组合对象addChild(添加子类)方法
+    combination.prototype.addChild = function(name){
+        //把传进来的子类推进childs数组
+        this.childs.push(name);
+        //还是为了链式操作
+        return this;
+    };
+    //实现组合对象getChild(获取子类)方法
+    combination.prototype.getChild = function(name){
+        //定义一个数组存放找到的叶子对象
+        var childsArr = [];
+        if(name &amp;&amp; this.name !== name){
+            //如果传了名字并且名字不是总公司名字
+            //程序执行下面代码
+            this.childs.forEach(function(item){
+                //传入名字是总公司直接子类的情况
+                if(item.name === name &amp;&amp; item.type === &apos;combination&apos;){
+                    item.childs.forEach(function(item){
+                        //判断item是否是组合对象
+                        if(item.type === &apos;combination&apos;){
+                            //如果是组合对象肯定有childs的子类
+                            //我们通过递归arguments.callee(指该函数本身)再遍历item的子类
+                            item.childs.forEach(arguments.callee);
+                        }else if(item.type === &apos;leaf&apos;){
+                            //直到遍历item为叶子对象的时候把item推入数组
+                            //遍历完成就会得到总公司直接子类的所有叶子对象
+                            childsArr.push(item);
+                        };
+                    });
+                };
+                //传入名字是2级3期.....n级子类的情况
+                if(item.name !== name &amp;&amp; item.type === &apos;combination&apos;){
+                    //递归从新遍历下一级
+                    item.childs.forEach(arguments.callee);
+                };
+                //传入名字是叶子对象的情况
+                if(item.name === name &amp;&amp; item.type === &apos;leaf&apos;){
+                    childsArr.push(item);
+                };
+            });
+        }else{
+            //如果不传名字或者传总公司名字就遍历整个公司
+            //this.childs指总公司下的分公司或者部门
+            this.childs.forEach(function(item){
+                //判断item是否是组合对象
+                if(item.type === &apos;combination&apos;){
+                    //如果是组合对象肯定有childs的子类
+                    //我们通过递归arguments.callee(指该函数本身)再遍历item的子类
+                    item.childs.forEach(arguments.callee);
+                }else if(item.type === &apos;leaf&apos;){
+                    //直到遍历item为叶子对象的时候把item推入数组
+                    //遍历完成就会得到总公司的所有叶子对象
+                    childsArr.push(item);
+                };
+            });
+        };
+        //把获取到的叶子对象返回去
+        return childsArr;
+    };
+    //现实组合对象removeChild(移除子类)方法
+    combination.prototype.removeChild = function(name){
+        var index = this.childs.indexOf(name);
+        if(index&gt;-1){
+            this.childs.splice(index,1);
+        }else{
+            console.warn(&quot;没找到&quot;+name);
+        };
+        return this;
+    };
+    //现象叶子对象hardWroking(努力工作)方法
+    combination.prototype.hardWroking = function(name){
+        //努力工作方法最终实现的是叶子对象
+        //所以要通过getChild获取的叶子对象
+        var arr = this.getChild(name);
+        //遍历获取到的所有叶子对象
+        for(var i =0;i&lt;arr.length;i++){
+            //让所有叶子对象执行hardWroking
+            arr[i].hardWroking();
+        };
+    };
+    //现象叶子对象sleeping(努力睡觉...)方法
+    //原来跟hardWroking一样,不做多讲解
+    combination.prototype.sleeping = function(name){
+        var arr = this.getChild(name);
+        for(var i=0;i&lt;arr.length;i++){
+            arr[i].sleeping();
+        };
+    };
+</code></pre><h4 id="实现叶子对象定义"><a href="#实现叶子对象定义" class="headerlink" title="实现叶子对象定义"></a>实现叶子对象定义</h4><pre><code>定义叶子对象
+function leaf(name){
+        //叶子对象的名字
+        this.name = name;
+        //定义type属性标明是叶子对象方便判断
+        this.type = &apos;leaf&apos;;
+    };
+    //实现组合对象addChild方法
+    leaf.prototype.addChild = function(){
+        //因为是叶子对象,他下面不会再有子类了,所以不存在添加子类这里可以是个空函数,
+        或者调用叶子对象这个方法的时候可以抛个错误
+    };
+    //实现组合对象removeChild方法
+    leaf.prototype.removeChild = function(){
+        //既然叶子对象不存在添加子类方法,相应也不存在移除子类方法,所以这里可以是个空函数,
+        或者调用叶子对象这个方法的时候可以抛个错误
+    };
+    //实现组合对象getChild方法
+    leaf.prototype.getChild = function(){
+        //叶子对象不存在子类,所以也应该没有获取子类的说法.所以这里可以是个空函数,
+        或者调用叶子对象这个方法的时候可以抛个错误
+    };
+    //实现叶子对象hardWroking方法
+    leaf.prototype.hardWroking = function(){
+        document.write(this.name+&quot; 努力工作...&lt;br/&gt;&quot;);
+    };
+    //实现叶子对象sleeping方法
+    leaf.prototype.sleeping = function(){
+        document.write(this.name+&quot;努力休息迎接下次加班...&lt;br/&gt;&quot;);
+    };
+
+    这里有人会问你叶子对象都没用到组合对象的方法,为什么还要实现组合对象的方法呢?
+    我这里只是按照组合对象的特点:2这两种类型都实现同一批接口.所以我把两个接口的方法,在
+    组合对象和叶子对象都实现了.
+</code></pre><h3 id="创建公司"><a href="#创建公司" class="headerlink" title="创建公司"></a>创建公司</h3><h4 id="用叶子对象实例员工"><a href="#用叶子对象实例员工" class="headerlink" title="用叶子对象实例员工"></a>用叶子对象实例员工</h4><pre><code>var xLi = new leaf(&quot;小李&quot;);
+var xZeng = new leaf(&quot;小曾&quot;);
+var xZhang = new leaf(&quot;小张&quot;);
+var xLiu = new leaf(&quot;小刘&quot;);
+var xMo = new leaf(&quot;小莫&quot;);
+var xLin = new leaf(&quot;小林&quot;);
+var xZhuang = new leaf(&quot;小庄&quot;);
+var xJiang = new leaf(&quot;小江&quot;);
+var xMing = new leaf(&quot;小明&quot;);
+</code></pre><h4 id="用组合对象实例部门"><a href="#用组合对象实例部门" class="headerlink" title="用组合对象实例部门"></a>用组合对象实例部门</h4><pre><code>var development = new combination(&quot;开发部门&quot;);
+//小李,小曾,小张,小刘,小莫,小林都是入职到开发部门
+development.addChilds(xLi).addChilds(xZeng).addChilds(xZhang).addChilds(xLiu).addChilds(xMo).addChilds(xLin);
+
+var finance = new combination(&quot;财务部门&quot;);
+//小庄,小江,小明是入职到财务部门
+finance.addPerson(xZhuang).addPerson(xJiang).addPerson(xMing);
+</code></pre><h4 id="用组合对象实例总公司"><a href="#用组合对象实例总公司" class="headerlink" title="用组合对象实例总公司"></a>用组合对象实例总公司</h4><pre><code>var company = new combination(&quot;总公司&quot;);
+//公司下面有开发部门(development)和财务部门(finance)
+company.addChilds(development).addChilds(finance);
+</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>好了现在公司构建完了,我们可以用company.hardWroking()或者company.hardWroking(‘总公司’),让全公司的员工努力工作了.company.hardWroking(‘财务部’)让财务部全体员工努力工作.company.hardWroking(‘小林’)让小林努力工作.  </p>
+<h4 id="改需求"><a href="#改需求" class="headerlink" title="改需求"></a>改需求</h4><p>上个列子基本都实现了,好那我们来看看改需求,公司挣钱了,开分公司了.需求要实现传分公司名字,让分公司全体努力工作.这时候应该怎么改?<br>其他代码什么不用变,只要把创建公司的代码改就可以.<br>我们来看例子:</p>
+<pre><code>//实例员工
+var xHong = new leaf(&apos;小红&apos;);
+var xMing = new leaf(&apos;小明&apos;);
+var xDong = new leaf(&apos;小东&apos;);
+var xJiang = new leaf(&apos;小江&apos;);
+var xLi = new leaf(&quot;小李&quot;);
+var xZeng = new leaf(&quot;小曾&quot;);
+var xZhang = new leaf(&quot;小张&quot;);
+var xLiu = new leaf(&quot;小刘&quot;);
+var xMo = new leaf(&quot;小莫&quot;);
+var xLin = new leaf(&quot;小林&quot;);
+var xZhuang = new leaf(&quot;小庄&quot;);
+
+//实例广州分公司的部门
+var GZfinance = new combination(&apos;广州财务部门&apos;);
+GZfinance.addChild(xHong);
+
+var GZdevelop = new combination(&apos;广州开发部门&apos;);
+GZdevelop.addChild(xMing).addChild(xDong).addChild(xJiang);
+
+//实例北京分公司的部门
+var BJfinance = new combination(&apos;北京财务部门&apos;);
+BJfinance.addChild(xLi).addChild(xZeng);
+
+var BJdevelop = new combination(&apos;北京开发部门&apos;);
+BJdevelop.addChild(xZhang).addChild(xLiu).addChild(xMo).addChild(xLin).addChild(xZhuang);
+
+//实例广州分公司
+var GZfiliale = new combination(&apos;广州分公司&apos;);
+GZfiliale.addChild(GZfinance).addChild(GZdevelop);
+
+//实例北京分公司
+var BJfiliale = new combination(&apos;北京分公司&apos;);
+BJfiliale.addChild(BJfinance).addChild(BJdevelop);
+
+//实例总部
+var headOffice = new combination(&apos;总部&apos;);
+headOffice.addChild(GZfiliale).addChild(BJfiliale);
+
+//调用方法还是一样
+headOffice.hardWroking();//全公司全体努力工作
+
+headOffice.hardWroking(&apos;广州分公司&apos;)//广州分公司全体努力工作
+
+headOffice.hardWroking(&apos;广州财务部&apos;)//广州财务部全体努力工作
+
+headOffice.hardWroking(&apos;小林&apos;)//小林努力工作
+
+headOffice.sleeping()//全公司全体努力工作
+</code></pre><p>我们看到只需要改变公司主体就行了,不会上个例子(<font color="#0099ff"><a href="https:bokess.github.io/2016/09/12/JavaScript组合模式前言/" target="_blank" rel="external">JavaScript组合模式前言</a></font>)要添加分公司类,函数逻辑也要改.对比之下,是不是觉得组合模式更能是适应需求变动.这就是组合模式,所有的实例都是通过组合对象和叶子对象,实例化出来的.</p>
+<p>组合模式的使用场景：</p>
+<pre><code>1 存在一批组织成某种层次体系的对象
+2 希望对这批对象或其中的一部分对象实施一个操作。
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript设计模式/" rel="tag">#JavaScript设计模式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/12/JavaScript组合模式前言/" rel="next" title="JavaScript组合模式前言">
+                <i class="fa fa-chevron-left"></i> JavaScript组合模式前言
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/13/javascript组合模式/"
+     data-title="javascript组合模式"
+     data-content=""
+     data-url="http://yoursite.com/2016/09/13/javascript组合模式/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/13/javascript组合模式/"
+           data-title="javascript组合模式" data-url="http://yoursite.com/2016/09/13/javascript组合模式/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i04.pictn.sogoucdn.com/859a7531a6cf1686"
+               alt="洪旭" />
+          <p class="site-author-name" itemprop="name">洪旭</p>
+          <p class="site-description motion-element" itemprop="description">个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#组合模式使用场景"><span class="nav-number">1.</span> <span class="nav-text">组合模式使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我们用组合模式先实现JavaScript组合模式前言的例子"><span class="nav-number">2.</span> <span class="nav-text">我们用组合模式先实现JavaScript组合模式前言的例子.</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义组合对象跟叶子对象"><span class="nav-number">2.1.</span> <span class="nav-text">定义组合对象跟叶子对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现组合对象定义"><span class="nav-number">2.1.1.</span> <span class="nav-text">实现组合对象定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现叶子对象定义"><span class="nav-number">2.1.2.</span> <span class="nav-text">实现叶子对象定义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建公司"><span class="nav-number">2.2.</span> <span class="nav-text">创建公司</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用叶子对象实例员工"><span class="nav-number">2.2.1.</span> <span class="nav-text">用叶子对象实例员工</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用组合对象实例部门"><span class="nav-number">2.2.2.</span> <span class="nav-text">用组合对象实例部门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用组合对象实例总公司"><span class="nav-number">2.2.3.</span> <span class="nav-text">用组合对象实例总公司</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">2.2.4.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改需求"><span class="nav-number">2.2.5.</span> <span class="nav-text">改需求</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bokess</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    Next
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"bokess"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
